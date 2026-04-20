@@ -27,12 +27,6 @@ export default async function ManageDashboard({ params }: Props) {
         <h1 className="text-2xl font-bold text-gray-900">{subject.name}</h1>
       </div>
 
-      {/* 権限チェック TODO */}
-      {/* TODO: SubjectRole チェック（owner/admin/staffのみアクセス可） */}
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 text-sm text-amber-700">
-        <strong>仮置き：</strong> 権限チェックは未実装です。Supabase連携後に SubjectRole による認可を追加します。
-      </div>
-
       {/* Stats カード */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
         {stats.map(({ label, value, icon: Icon, href }) => (

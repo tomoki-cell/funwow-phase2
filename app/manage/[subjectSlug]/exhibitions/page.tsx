@@ -32,17 +32,10 @@ export default async function ExhibitionsPage({ params }: Props) {
             この主体に紐づく展示をFunwow探索カタログと接続します
           </p>
         </div>
-        {/* TODO: 展示検索・紐づけフォーム（Supabase + Phase1 Exhibitionテーブル連携後） */}
         <button className="flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 rounded-full text-sm font-medium hover:bg-gray-700 transition-colors">
           <Plus className="w-4 h-4" />
           展示を追加
         </button>
-      </div>
-
-      {/* TODO: Phase1 Exhibition テーブルとの接続ポイント */}
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-sm text-amber-700">
-        <strong>仮置き：</strong> Phase1の Exhibition テーブルと SubjectExhibitionLink を通じて紐づけます。
-        現在はモックデータを表示しています。
       </div>
 
       <div className="space-y-3">
@@ -70,9 +63,6 @@ export default async function ExhibitionsPage({ params }: Props) {
         ))}
       </div>
 
-      <p className="text-xs text-gray-400 mt-4">
-        ※ Supabase連携後、Phase1のExhibitionカタログから検索・紐づけができるようになります。
-      </p>
     </div>
   )
 }

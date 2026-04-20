@@ -28,9 +28,6 @@ export default function CommunitiesPage() {
         </p>
       </div>
 
-      {/* TODO: Phase1 - explore の communities カテゴリとして統合 */}
-
-      {/* フィルター（仮置き） */}
       <div className="flex gap-2 mb-8 flex-wrap">
         <button className="px-4 py-1.5 rounded-full text-sm bg-gray-900 text-white font-medium">
           すべて

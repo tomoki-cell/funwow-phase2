@@ -104,13 +104,8 @@ export default async function MemberPassPage({ params }: Props) {
             </div>
           </div>
 
-          {/* QRコード（仮） */}
-          {/* TODO: QRToken生成・表示（Supabase連携後） */}
           <div className="flex items-center justify-center bg-white rounded-2xl p-4">
-            <div className="text-gray-300 flex flex-col items-center gap-2">
-              <QrCode className="w-24 h-24 text-gray-200" />
-              <span className="text-xs text-gray-400">QRコードは連携後に表示されます</span>
-            </div>
+            <QrCode className="w-24 h-24 text-gray-200" />
           </div>
         </div>
       </div>
@@ -133,7 +128,6 @@ export default async function MemberPassPage({ params }: Props) {
               オンライントークへの参加
             </li>
           </ul>
-          {/* TODO: Phase1 - ポイント残高・利用履歴への導線 */}
         </div>
       )}
 

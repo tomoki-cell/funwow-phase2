@@ -66,9 +66,6 @@ export default async function ParticipationsPage({ params }: Props) {
         </table>
       </div>
 
-      <p className="text-xs text-gray-400 mt-4">
-        ※ モックデータを表示しています。Supabase連携後に実データに切り替えます。
-      </p>
     </div>
   )
 }
