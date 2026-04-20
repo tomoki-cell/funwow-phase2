@@ -104,7 +104,7 @@ export default function ManageEventsPage() {
     } else {
       const newEvent: Event = {
         id: `event_new_${Date.now()}`,
-        organizerSubjectId: subject.id,
+        organizerSubjectId: subject!.id,
         isFunwowHosted: false,
         title: form.title,
         description: form.description,
