@@ -71,7 +71,7 @@ export default function ManagePostsPage() {
     } else {
       const newPost: Post = {
         id: `post_new_${Date.now()}`,
-        subjectId: subject.id,
+        subjectId: subject!.id,
         title: form.title,
         body: form.body,
         postType: form.postType,
