@@ -22,6 +22,11 @@ export interface MockParticipationRecord {
   detail: string
   place: string
   occurredAt: string
+  // Phase1連携：どの展示・スペースのチェックインか
+  phase1ExhibitionId?: string
+  phase1SpaceId?: string
+  phase1SpaceName?: string
+  isOtherVenue?: boolean   // Gallery HAKU以外のFunwow登録スペース
 }
 
 // ============================================================
@@ -74,16 +79,16 @@ export const mockMembers: MockMember[] = [
 // ============================================================
 export const mockParticipations: MockParticipationRecord[] = [
   // ---- u01 佐藤みき（ヘビー：10件） ----
-  { id: 'p001', userId: 'u01', type: 'event', label: 'イベント参加', detail: '会員限定プレビュー「境界線の詩」', place: 'Gallery HAKU', occurredAt: '2025-05-23T18:00:00Z' },
-  { id: 'p002', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '「境界線の詩」鑑賞', place: 'Gallery HAKU', occurredAt: '2025-05-25T14:00:00Z' },
-  { id: 'p003', userId: 'u01', type: 'event', label: 'イベント参加', detail: '春の会員向けトーク', place: 'Gallery HAKU', occurredAt: '2025-03-15T15:00:00Z' },
-  { id: 'p004', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '「静寂の間」鑑賞', place: 'Gallery HAKU', occurredAt: '2025-02-10T13:00:00Z' },
-  { id: 'p005', userId: 'u01', type: 'event', label: 'イベント参加', detail: '前回展示「静寂の間」内覧会', place: 'Gallery HAKU', occurredAt: '2025-01-18T18:00:00Z' },
-  { id: 'p006', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '「静寂の間」再鑑賞', place: 'Gallery HAKU', occurredAt: '2025-01-25T15:30:00Z' },
-  { id: 'p007', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'SCAI THE BATHHOUSE', occurredAt: '2025-01-28T14:00:00Z' },
-  { id: 'p008', userId: 'u01', type: 'event', label: 'イベント参加', detail: '2024年秋展示トーク', place: 'Gallery HAKU', occurredAt: '2024-10-25T15:00:00Z' },
-  { id: 'p009', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '秋展示鑑賞', place: 'Gallery HAKU', occurredAt: '2024-10-30T13:00:00Z' },
-  { id: 'p010', userId: 'u01', type: 'pass', label: '会員証提示', detail: '特典利用', place: 'Gallery HAKU', occurredAt: '2024-11-05T16:00:00Z' },
+  { id: 'p001', userId: 'u01', type: 'event', label: 'イベント参加', detail: '会員限定プレビュー「境界線の詩」', place: 'Gallery HAKU', occurredAt: '2025-05-23T18:00:00Z', phase1ExhibitionId: 'ex_002', phase1SpaceId: 'sp_001' },
+  { id: 'p002', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '「境界線の詩」鑑賞', place: 'Gallery HAKU', occurredAt: '2025-05-25T14:00:00Z', phase1ExhibitionId: 'ex_002', phase1SpaceId: 'sp_001' },
+  { id: 'p003', userId: 'u01', type: 'event', label: 'イベント参加', detail: '春の会員向けトーク', place: 'Gallery HAKU', occurredAt: '2025-03-15T15:00:00Z', phase1SpaceId: 'sp_001' },
+  { id: 'p004', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '「静寂の間」鑑賞', place: 'Gallery HAKU', occurredAt: '2025-02-10T13:00:00Z', phase1SpaceId: 'sp_001' },
+  { id: 'p005', userId: 'u01', type: 'event', label: 'イベント参加', detail: '前回展示「静寂の間」内覧会', place: 'Gallery HAKU', occurredAt: '2025-01-18T18:00:00Z', phase1SpaceId: 'sp_001' },
+  { id: 'p006', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '「静寂の間」再鑑賞', place: 'Gallery HAKU', occurredAt: '2025-01-25T15:30:00Z', phase1SpaceId: 'sp_001' },
+  { id: 'p007', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '「土と光のあいだ」鑑賞', place: 'VOID Tokyo', occurredAt: '2025-04-15T14:00:00Z', phase1ExhibitionId: 'ex_003', phase1SpaceId: 'sp_002', phase1SpaceName: 'VOID Tokyo', isOtherVenue: true },
+  { id: 'p008', userId: 'u01', type: 'event', label: 'イベント参加', detail: '2024年秋展示トーク', place: 'Gallery HAKU', occurredAt: '2024-10-25T15:00:00Z', phase1SpaceId: 'sp_001' },
+  { id: 'p009', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '秋展示鑑賞', place: 'Gallery HAKU', occurredAt: '2024-10-30T13:00:00Z', phase1SpaceId: 'sp_001' },
+  { id: 'p010', userId: 'u01', type: 'pass', label: '会員証提示', detail: '特典利用', place: 'Gallery HAKU', occurredAt: '2024-11-05T16:00:00Z', phase1SpaceId: 'sp_001' },
 
   // ---- u02 田中花子（ヘビー：9件） ----
   { id: 'p011', userId: 'u02', type: 'event', label: 'イベント参加', detail: '会員限定プレビュー「境界線の詩」', place: 'Gallery HAKU', occurredAt: '2025-05-23T18:00:00Z' },
@@ -216,17 +221,17 @@ export const mockParticipations: MockParticipationRecord[] = [
   { id: 'p092', userId: 'u28', type: 'event', label: 'イベント参加', detail: 'オープニングトーク（公開）', place: 'Gallery HAKU', occurredAt: '2025-05-24T16:00:00Z' },
   { id: 'p093', userId: 'u30', type: 'visit', label: 'チェックイン', detail: '「境界線の詩」鑑賞', place: 'Gallery HAKU', occurredAt: '2025-05-26T14:00:00Z' },
 
-  // ---- 追加：各ユーザーの他ギャラリー訪問 ----
-  { id: 'p094', userId: 'u06', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'Spiral Garden', occurredAt: '2025-04-28T14:00:00Z' },
-  { id: 'p095', userId: 'u07', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'Taka Ishii Gallery', occurredAt: '2025-05-10T15:00:00Z' },
-  { id: 'p096', userId: 'u10', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'SCAI THE BATHHOUSE', occurredAt: '2025-04-08T14:00:00Z' },
-  { id: 'p097', userId: 'u11', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'NADiff a/p/a/r/t', occurredAt: '2025-05-15T13:00:00Z' },
-  { id: 'p098', userId: 'u12', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'The National Art Center', occurredAt: '2025-03-25T11:00:00Z' },
-  { id: 'p099', userId: 'u13', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'Void Tokyo', occurredAt: '2025-04-30T15:00:00Z' },
-  { id: 'p100', userId: 'u04', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'The National Art Center', occurredAt: '2025-05-18T11:00:00Z' },
-  { id: 'p101', userId: 'u05', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'SCAI THE BATHHOUSE', occurredAt: '2025-04-12T15:00:00Z' },
-  { id: 'p102', userId: 'u02', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'Spiral Garden', occurredAt: '2025-05-05T14:00:00Z' },
-  { id: 'p103', userId: 'u01', type: 'visit', label: 'チェックイン', detail: '他ギャラリー訪問', place: 'Taka Ishii Gallery', occurredAt: '2025-04-08T15:00:00Z' },
+  // ---- 追加：各ユーザーの他Funwow登録スペース来訪（Phase1連携データ） ----
+  { id: 'p094', userId: 'u06', type: 'visit', label: 'チェックイン', detail: '「After the Garden」鑑賞', place: 'Nanzuka Underground', occurredAt: '2025-05-12T14:00:00Z', phase1ExhibitionId: 'ex_004', phase1SpaceId: 'sp_003', phase1SpaceName: 'Nanzuka Underground', isOtherVenue: true },
+  { id: 'p095', userId: 'u07', type: 'visit', label: 'チェックイン', detail: '「土と光のあいだ」鑑賞', place: 'VOID Tokyo', occurredAt: '2025-04-18T15:00:00Z', phase1ExhibitionId: 'ex_003', phase1SpaceId: 'sp_002', phase1SpaceName: 'VOID Tokyo', isOtherVenue: true },
+  { id: 'p096', userId: 'u10', type: 'visit', label: 'チェックイン', detail: '「光の建築」鑑賞', place: 'VOID Tokyo', occurredAt: '2025-06-20T14:00:00Z', phase1ExhibitionId: 'ex_005', phase1SpaceId: 'sp_002', phase1SpaceName: 'VOID Tokyo', isOtherVenue: true },
+  { id: 'p097', userId: 'u11', type: 'visit', label: 'チェックイン', detail: '「After the Garden」鑑賞', place: 'Nanzuka Underground', occurredAt: '2025-05-15T13:00:00Z', phase1ExhibitionId: 'ex_004', phase1SpaceId: 'sp_003', phase1SpaceName: 'Nanzuka Underground', isOtherVenue: true },
+  { id: 'p098', userId: 'u12', type: 'visit', label: 'チェックイン', detail: '「土と光のあいだ」鑑賞', place: 'VOID Tokyo', occurredAt: '2025-04-10T11:00:00Z', phase1ExhibitionId: 'ex_003', phase1SpaceId: 'sp_002', phase1SpaceName: 'VOID Tokyo', isOtherVenue: true },
+  { id: 'p099', userId: 'u13', type: 'visit', label: 'チェックイン', detail: '「土と光のあいだ」鑑賞', place: 'VOID Tokyo', occurredAt: '2025-04-22T15:00:00Z', phase1ExhibitionId: 'ex_003', phase1SpaceId: 'sp_002', phase1SpaceName: 'VOID Tokyo', isOtherVenue: true },
+  { id: 'p100', userId: 'u04', type: 'visit', label: 'チェックイン', detail: '「光の建築」鑑賞', place: 'VOID Tokyo', occurredAt: '2025-06-18T11:00:00Z', phase1ExhibitionId: 'ex_005', phase1SpaceId: 'sp_002', phase1SpaceName: 'VOID Tokyo', isOtherVenue: true },
+  { id: 'p101', userId: 'u05', type: 'visit', label: 'チェックイン', detail: '「After the Garden」鑑賞', place: 'Nanzuka Underground', occurredAt: '2025-05-14T15:00:00Z', phase1ExhibitionId: 'ex_004', phase1SpaceId: 'sp_003', phase1SpaceName: 'Nanzuka Underground', isOtherVenue: true },
+  { id: 'p102', userId: 'u02', type: 'visit', label: 'チェックイン', detail: '「土と光のあいだ」鑑賞', place: 'VOID Tokyo', occurredAt: '2025-04-20T14:00:00Z', phase1ExhibitionId: 'ex_003', phase1SpaceId: 'sp_002', phase1SpaceName: 'VOID Tokyo', isOtherVenue: true },
+  { id: 'p103', userId: 'u03', type: 'visit', label: 'チェックイン', detail: '「After the Garden」鑑賞', place: 'Nanzuka Underground', occurredAt: '2025-05-20T15:00:00Z', phase1ExhibitionId: 'ex_004', phase1SpaceId: 'sp_003', phase1SpaceName: 'Nanzuka Underground', isOtherVenue: true },
 ]
 
 // ============================================================
@@ -243,8 +248,8 @@ export function getParticipationsByUserId(userId: string): MockParticipationReco
 /** 会員ごとの統計 */
 export function getMemberStats(userId: string) {
   const records = getParticipationsByUserId(userId)
-  const hakuRecords = records.filter((r) => r.place === 'Gallery HAKU')
-  const otherRecords = records.filter((r) => r.place !== 'Gallery HAKU')
+  const hakuRecords = records.filter((r) => !r.isOtherVenue)
+  const otherVenueRecords = records.filter((r) => r.isOtherVenue)
   const lastVisit = records.length > 0 ? records[0].occurredAt : null
 
   // 最終来訪からの日数
@@ -259,10 +264,14 @@ export function getMemberStats(userId: string) {
   else if (hakuRecords.length >= 1) engagement = 'low'
   else engagement = 'none'
 
+  // 他スペース来訪スポット（ユニーク）
+  const otherVenueNames = [...new Set(otherVenueRecords.map((r) => r.phase1SpaceName ?? r.place))]
+
   return {
     totalCount: records.length,
     hakuCount: hakuRecords.length,
-    otherCount: otherRecords.length,
+    otherCount: otherVenueRecords.length,
+    otherVenueNames,
     lastVisit,
     daysSinceLastVisit,
     engagement,

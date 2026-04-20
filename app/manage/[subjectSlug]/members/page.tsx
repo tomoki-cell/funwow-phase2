@@ -269,8 +269,11 @@ export default function MembersPage() {
                           {stats.hakuCount}
                         </span>
                         {stats.otherCount > 0 && (
-                          <span className="text-xs text-gray-400" title="他ギャラリーも含む">
-                            +{stats.otherCount}他
+                          <span
+                            className="text-xs text-blue-500 bg-blue-50 rounded px-1 py-0.5"
+                            title={`他スペース来訪：${stats.otherVenueNames.join('、')}`}
+                          >
+                            +{stats.otherCount} 他
                           </span>
                         )}
                       </div>
@@ -402,7 +405,7 @@ export default function MembersPage() {
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3 text-center">
                   <div className="text-xl font-bold text-gray-900">{selectedMember.stats.otherCount}</div>
-                  <div className="text-xs text-gray-500 mt-0.5">他ギャラリー</div>
+                  <div className="text-xs text-gray-500 mt-0.5">他スペース</div>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3 text-center">
                   <div className={`text-xl font-bold ${
@@ -456,21 +459,29 @@ export default function MembersPage() {
                 )}
               </div>
 
-              {/* 他ギャラリー来訪 */}
+              {/* 他Funwow登録スペース来訪 */}
               {otherHistory.length > 0 && (
                 <div>
-                  <div className="flex items-center gap-2 text-sm font-semibold text-gray-800 mb-3">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-gray-800 mb-1">
                     <MapPin className="w-4 h-4 text-gray-500" />
-                    他ギャラリー来訪
+                    他スペース来訪
                     <span className="text-xs font-normal text-gray-400">({otherHistory.length}件)</span>
+                  </div>
+                  <p className="text-xs text-gray-400 mb-2">Funwow登録スペースへのチェックイン（Phase1連携）</p>
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {selectedMember.stats.otherVenueNames.map((name: string) => (
+                      <span key={name} className="text-xs bg-blue-50 text-blue-600 border border-blue-100 rounded-full px-2 py-0.5">
+                        {name}
+                      </span>
+                    ))}
                   </div>
                   <div className="space-y-1.5">
                     {otherHistory.map((r) => (
-                      <div key={r.id} className="flex items-center justify-between py-1.5 border-b border-gray-50 last:border-0">
-                        <div className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-gray-300" />
+                      <div key={r.id} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                        <div className="flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-blue-300 mt-1.5" />
                           <div>
-                            <div className="text-sm text-gray-600">{r.place}</div>
+                            <div className="text-sm text-gray-700 font-medium">{r.place}</div>
                             <div className="text-xs text-gray-400">{r.detail}</div>
                           </div>
                         </div>
