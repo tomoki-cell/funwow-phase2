@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { LayoutDashboard, Users, FileText, Calendar, History, Building2, ChevronLeft, Mail } from 'lucide-react'
+import { LayoutDashboard, Users, FileText, Calendar, History, Building2, ChevronLeft, Mail, CreditCard } from 'lucide-react'
 import { getSubjectBySlug, mockCurrentUserRoles } from '@/lib/mock/subjects'
 import SubjectBadge from '@/components/SubjectBadge'
 
@@ -14,6 +14,7 @@ const navItems = [
   { href: '/members', label: '会員管理', icon: Users },
   { href: '/posts', label: '投稿管理', icon: FileText },
   { href: '/events', label: 'イベント管理', icon: Calendar },
+  { href: '/plans', label: 'プラン管理', icon: CreditCard },
   { href: '/messages', label: 'メール履歴', icon: Mail },
   { href: '/participations', label: '参加履歴', icon: History },
   { href: '/exhibitions', label: '展示登録', icon: Building2 },
