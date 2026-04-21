@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getSubjectBySlug } from '@/lib/mock/subjects'
 import SubjectBadge from '@/components/SubjectBadge'
-import { CheckCircle, ChevronLeft } from 'lucide-react'
+import { CheckCircle, ChevronLeft, ShieldCheck } from 'lucide-react'
 
 interface Props {
   params: Promise<{ subjectSlug: string }>
@@ -84,7 +84,7 @@ export default async function MemberPassPage({ params }: Props) {
           </div>
 
           {/* 会員情報 */}
-          <div className="border-t border-white/20 pt-5 mb-5 grid grid-cols-2 gap-4 text-sm">
+          <div className="border-t border-white/20 pt-5 mb-6 grid grid-cols-2 gap-4 text-sm">
             <div>
               <div className="text-gray-400 text-xs mb-1">参加日</div>
               <div>{joinedDate}</div>
@@ -103,20 +103,14 @@ export default async function MemberPassPage({ params }: Props) {
             </div>
             <div>
               <div className="text-gray-400 text-xs mb-1">会員ID</div>
-              <div className="font-mono text-xs text-gray-400">{membership.id.slice(-8)}</div>
+              <div className="font-mono text-xs text-gray-400">{membership.id.slice(-8).toUpperCase()}</div>
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center bg-white rounded-2xl p-4 gap-2">
-            <Image
-              src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=funwow:pass:${membership.id}&color=111111&bgcolor=ffffff&margin=4`}
-              alt="会員証QRコード"
-              width={180}
-              height={180}
-              className="rounded-lg"
-              unoptimized
-            />
-            <p className="text-xs text-gray-400 font-mono tracking-wider">{membership.id.slice(-12).toUpperCase()}</p>
+          {/* 有効バッジ */}
+          <div className="flex items-center justify-center gap-2 bg-green-500/20 border border-green-500/30 rounded-2xl py-4">
+            <ShieldCheck className="w-6 h-6 text-green-400" />
+            <span className="text-green-300 font-semibold text-lg">会員資格 確認済み</span>
           </div>
         </div>
       </div>
