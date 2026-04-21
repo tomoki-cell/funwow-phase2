@@ -7,6 +7,7 @@ import ExhibitionCard from '@/components/ExhibitionCard'
 import CreatorCard from '@/components/CreatorCard'
 import { CheckCircle, Coins, MapPin, ArrowRight, Settings, Gift, Clock, Calendar } from 'lucide-react'
 import { mockBenefitUsages, mockBenefits, benefitTypeLabel, isTodayOrWithin2Hours } from '@/lib/mock/benefits'
+import NotificationsSection from './NotificationsSection'
 
 // マイページで表示する参加済みコミュニティ
 const mySubjects = allSubjects.filter((s) => s.currentUserMembership)
@@ -128,6 +129,9 @@ export default function MyPage() {
           </Link>
         </div>
       </div>
+
+      {/* お知らせ */}
+      <NotificationsSection />
 
       {/* 管理しているコミュニティ */}
       {managedSubjects.length > 0 && (
