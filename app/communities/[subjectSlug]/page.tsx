@@ -6,7 +6,7 @@ import SubjectBadge from '@/components/SubjectBadge'
 import MembershipBadge from '@/components/MembershipBadge'
 import PostCard from '@/components/PostCard'
 import EventCard from '@/components/EventCard'
-import { Users, ArrowRight, CheckCircle } from 'lucide-react'
+import { Users, ArrowRight, CheckCircle, Gift } from 'lucide-react'
 
 interface Props {
   params: Promise<{ subjectSlug: string }>
@@ -155,6 +155,14 @@ export default async function CommunityDetailPage({ params }: Props) {
                   </Link>
                 </div>
               )}
+              {/* 特典ページへの導線（会員全員） */}
+              <Link
+                href={`/communities/${subjectSlug}/benefits`}
+                className="flex items-center justify-center gap-2 w-full border border-gray-200 text-gray-700 text-center py-2.5 rounded-full text-sm font-medium hover:border-gray-400 transition-colors mt-2"
+              >
+                <Gift className="w-4 h-4" />
+                会員特典を見る
+              </Link>
               {isAnnual && (
                 <Link
                   href={`/communities/${subjectSlug}/pass`}

@@ -2,11 +2,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { mockCurrentUser, mockExhibitions, mockCreators } from '@/lib/mock/phase1'
 import { allSubjects, getManagedSubjects, mockCurrentUserRoles } from '@/lib/mock/subjects'
-import CommunityCard from '@/components/CommunityCard'
 import MembershipBadge from '@/components/MembershipBadge'
 import ExhibitionCard from '@/components/ExhibitionCard'
 import CreatorCard from '@/components/CreatorCard'
-import { CheckCircle, Coins, MapPin, ArrowRight, Settings } from 'lucide-react'
+import { CheckCircle, Coins, MapPin, ArrowRight, Settings, Gift, Clock, Calendar } from 'lucide-react'
+import { mockBenefitUsages, mockBenefits, benefitTypeLabel, isTodayOrWithin2Hours } from '@/lib/mock/benefits'
 
 // マイページで表示する参加済みコミュニティ
 const mySubjects = allSubjects.filter((s) => s.currentUserMembership)
@@ -21,6 +21,14 @@ const savedExhibitions = mockExhibitions.filter((ex) =>
 const savedCreators = mockCreators.filter((cr) =>
   mockCurrentUser.savedCreatorIds.includes(cr.id)
 )
+
+// ログインユーザーの特典申請履歴
+const MY_USER_ID = 'u01'
+const myBenefitUsages = mockBenefitUsages.filter((u) => u.userId === MY_USER_ID)
+const myBenefitWithDetails = myBenefitUsages.map((usage) => ({
+  usage,
+  benefit: mockBenefits.find((b) => b.id === usage.benefitId),
+})).filter((item) => item.benefit)
 
 // 来場履歴（モック）
 const visitHistory = [
@@ -162,6 +170,88 @@ export default function MyPage() {
                   >
                     管理画面を開く
                   </Link>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* 特典・申請状況 */}
+      {myBenefitWithDetails.length > 0 && (
+        <section className="mb-10">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Gift className="w-5 h-5 text-gray-400" />
+              <h2 className="text-lg font-semibold text-gray-900">特典・申請状況</h2>
+            </div>
+            <Link
+              href="/communities/gallery-haku/benefits"
+              className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1 transition-colors"
+            >
+              特典一覧 <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+          <div className="space-y-3">
+            {myBenefitWithDetails.map(({ usage, benefit }) => {
+              const isToday = isTodayOrWithin2Hours(benefit!.eventDate)
+              const showCheckinBtn =
+                usage.status === 'approved' &&
+                benefit!.type === 'event_registration' &&
+                isToday
+
+              return (
+                <div
+                  key={usage.id}
+                  className={`bg-white rounded-xl border p-4 ${showCheckinBtn ? 'border-green-200' : 'border-gray-100'}`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                        <span className="text-xs text-gray-400">{benefitTypeLabel[benefit!.type]}</span>
+                        {isToday && usage.status === 'approved' && (
+                          <span className="text-xs font-semibold text-red-500 bg-red-50 px-2 py-0.5 rounded-full">
+                            本日開催
+                          </span>
+                        )}
+                      </div>
+                      <div className="font-medium text-gray-900 text-sm">{benefit!.title}</div>
+                      {benefit!.eventDate && (
+                        <div className="flex items-center gap-1 text-xs text-gray-400 mt-0.5">
+                          <Calendar className="w-3 h-3" />
+                          {new Date(benefit!.eventDate).toLocaleDateString('ja-JP', {
+                            month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
+                          })}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* ステータス / アクション */}
+                    {usage.status === 'checked_in' ? (
+                      <div className="flex items-center gap-1.5 text-green-600 text-sm font-medium flex-shrink-0">
+                        <CheckCircle className="w-4 h-4" />
+                        参加済み
+                      </div>
+                    ) : usage.status === 'used' ? (
+                      <span className="text-xs text-gray-400 flex-shrink-0">使用済み</span>
+                    ) : usage.status === 'pending' ? (
+                      <div className="flex items-center gap-1.5 text-xs text-yellow-600 border border-yellow-200 bg-yellow-50 px-2.5 py-1 rounded-full flex-shrink-0">
+                        <Clock className="w-3.5 h-3.5" />
+                        承認待ち
+                      </div>
+                    ) : showCheckinBtn ? (
+                      <Link
+                        href={`/communities/gallery-haku/benefits`}
+                        className="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-green-700 transition-colors flex-shrink-0"
+                      >
+                        参加する
+                      </Link>
+                    ) : (
+                      <span className="text-xs text-blue-600 border border-blue-200 bg-blue-50 px-2.5 py-1 rounded-full flex-shrink-0">
+                        申込済み
+                      </span>
+                    )}
+                  </div>
                 </div>
               )
             })}
