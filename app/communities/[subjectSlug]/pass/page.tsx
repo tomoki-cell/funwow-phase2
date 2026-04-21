@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getSubjectBySlug } from '@/lib/mock/subjects'
 import SubjectBadge from '@/components/SubjectBadge'
-import { CheckCircle, ChevronLeft, ShieldCheck } from 'lucide-react'
+import { CheckCircle, ChevronLeft } from 'lucide-react'
 
 interface Props {
   params: Promise<{ subjectSlug: string }>
@@ -20,6 +20,9 @@ export default async function MemberPassPage({ params }: Props) {
   }
 
   const isAnnual = membership.planCode === 'annual'
+  const planDef = subject.plans.find((p) => p.planCode === membership.planCode)
+  const planName = planDef?.name ?? membership.planCode
+
   const joinedDate = new Date(membership.joinedAt).toLocaleDateString('ja-JP', {
     year: 'numeric',
     month: 'long',
@@ -77,9 +80,6 @@ export default async function MemberPassPage({ params }: Props) {
             )}
             <div>
               <div className="font-bold text-xl">{subject.name}</div>
-              <div className="text-sm text-gray-300">
-                {isAnnual ? '年会員' : 'フォロワー'}
-              </div>
             </div>
           </div>
 
@@ -107,10 +107,14 @@ export default async function MemberPassPage({ params }: Props) {
             </div>
           </div>
 
-          {/* 有効バッジ */}
-          <div className="flex items-center justify-center gap-2 bg-green-500/20 border border-green-500/30 rounded-2xl py-4">
-            <ShieldCheck className="w-6 h-6 text-green-400" />
-            <span className="text-green-300 font-semibold text-lg">会員資格 確認済み</span>
+          {/* プラン名 */}
+          <div className="flex flex-col items-center justify-center bg-white/10 rounded-2xl py-5 px-4 text-center">
+            <div className="text-xs text-gray-400 tracking-widest uppercase mb-1">会員プラン</div>
+            <div className="text-white font-bold text-2xl">{planName}</div>
+            <div className="flex items-center gap-1 mt-2 text-green-400 text-sm">
+              <CheckCircle className="w-4 h-4" />
+              有効
+            </div>
           </div>
         </div>
       </div>
