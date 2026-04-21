@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation'
 import { useUser, UserButton, SignInButton } from '@clerk/nextjs'
 import { clsx } from 'clsx'
 import { Search } from 'lucide-react'
+import { mockNotifications } from '@/lib/mock/notifications'
+
+const unreadCount = mockNotifications.filter((n) => !n.isRead).length
 
 const navLinks = [
   { href: '/explore', label: '探索' },
@@ -56,13 +59,18 @@ export default function Nav() {
               <Link
                 href="/mypage"
                 className={clsx(
-                  'text-sm transition-colors',
+                  'relative text-sm transition-colors',
                   pathname?.startsWith('/mypage')
                     ? 'text-gray-900 font-medium'
                     : 'text-gray-500 hover:text-gray-900'
                 )}
               >
                 マイページ
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-2.5 bg-red-500 text-white text-[9px] font-bold min-w-[14px] h-3.5 px-0.5 rounded-full flex items-center justify-center leading-none">
+                    {unreadCount}
+                  </span>
+                )}
               </Link>
               {/* Clerk の UserButton（アバター＋ドロップダウン） */}
               <UserButton
