@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { CheckCircle, ChevronLeft } from 'lucide-react'
+import { CheckCircle, ChevronLeft, CreditCard } from 'lucide-react'
 import { allSubjects } from '@/lib/mock/subjects'
 import SubjectBadge from '@/components/SubjectBadge'
 import JoinButton from '@/components/JoinButton'
@@ -77,16 +77,18 @@ function JoinForm({ subjectSlug }: { subjectSlug: string }) {
             >
               {annualPlan.description}
             </p>
-            {annualPlan.includesFunwowBaseBenefits && (
-              <div
-                className={`flex items-center gap-1.5 text-sm mb-4 ${
-                  defaultPlan === 'annual' ? 'text-green-300' : 'text-green-600'
-                }`}
-              >
-                <CheckCircle className="w-4 h-4" />
-                Funwow 月1,000pt付与を含む
+            <div className={`space-y-1.5 mb-4 ${defaultPlan === 'annual' ? 'text-green-300' : 'text-green-600'}`}>
+              {annualPlan.includesFunwowBaseBenefits && (
+                <div className="flex items-center gap-1.5 text-sm">
+                  <CheckCircle className="w-4 h-4 flex-shrink-0" />
+                  Funwow 月1,000pt付与を含む
+                </div>
+              )}
+              <div className="flex items-center gap-1.5 text-sm">
+                <CreditCard className="w-4 h-4 flex-shrink-0" />
+                デジタル会員証が発行されます
               </div>
-            )}
+            </div>
             <JoinButton
               subjectSlug={subjectSlug}
               plan="annual"

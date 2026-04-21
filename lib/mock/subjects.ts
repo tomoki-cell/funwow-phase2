@@ -363,15 +363,16 @@ export const mockFairEvents: Event[] = [
 // ============================================================
 
 export const mockCurrentUserMemberships: Record<string, CommunityMembership> = {
-  // アートスペースのfree会員
+  // アートスペースの年会員
   'sub_space_001': {
     id: 'mem_001',
     subjectId: 'sub_space_001',
     userId: 'user_current',
-    membershipPlanId: 'plan_space_free',
-    planCode: 'free',
+    membershipPlanId: 'plan_space_annual',
+    planCode: 'annual',
     status: 'active',
-    joinedAt: '2025-02-01T00:00:00Z',
+    joinedAt: '2026-02-01T00:00:00Z',
+    expiresAt: '2027-02-01T00:00:00Z',
     sourceType: 'self_join',
   },
 }

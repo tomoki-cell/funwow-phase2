@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getSubjectBySlug } from '@/lib/mock/subjects'
 import SubjectBadge from '@/components/SubjectBadge'
-import { CheckCircle, ChevronLeft, QrCode } from 'lucide-react'
+import { CheckCircle, ChevronLeft } from 'lucide-react'
 
 interface Props {
   params: Promise<{ subjectSlug: string }>
@@ -43,7 +43,10 @@ export default async function MemberPassPage({ params }: Props) {
         コミュニティに戻る
       </Link>
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">デジタル会員証</h1>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">デジタル会員証</h1>
+        <p className="text-sm text-gray-500 mt-1">来場時にスタッフへご提示ください</p>
+      </div>
 
       {/* 会員証カード */}
       <div className="bg-gray-900 text-white rounded-3xl p-8 mb-6 relative overflow-hidden">
@@ -104,8 +107,16 @@ export default async function MemberPassPage({ params }: Props) {
             </div>
           </div>
 
-          <div className="flex items-center justify-center bg-white rounded-2xl p-4">
-            <QrCode className="w-24 h-24 text-gray-200" />
+          <div className="flex flex-col items-center justify-center bg-white rounded-2xl p-4 gap-2">
+            <Image
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=funwow:pass:${membership.id}&color=111111&bgcolor=ffffff&margin=4`}
+              alt="会員証QRコード"
+              width={180}
+              height={180}
+              className="rounded-lg"
+              unoptimized
+            />
+            <p className="text-xs text-gray-400 font-mono tracking-wider">{membership.id.slice(-12).toUpperCase()}</p>
           </div>
         </div>
       </div>
@@ -131,12 +142,18 @@ export default async function MemberPassPage({ params }: Props) {
         </div>
       )}
 
-      <div className="text-center">
+      <div className="flex flex-col items-center gap-3">
         <Link
           href={`/communities/${subjectSlug}`}
           className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
         >
           コミュニティページに戻る
+        </Link>
+        <Link
+          href="/mypage"
+          className="text-sm text-gray-400 hover:text-gray-700 transition-colors"
+        >
+          マイページへ
         </Link>
       </div>
     </div>

@@ -36,9 +36,13 @@ export default function JoinButton({
 
     setState('done')
 
-    // 成功後、少し待ってからコミュニティページへ
+    // 年会員は会員証ページへ、フォロワーはコミュニティページへ
     setTimeout(() => {
-      router.push(`/communities/${subjectSlug}`)
+      if (plan === 'annual') {
+        router.push(`/communities/${subjectSlug}/pass`)
+      } else {
+        router.push(`/communities/${subjectSlug}`)
+      }
       router.refresh()
     }, 1500)
   }
