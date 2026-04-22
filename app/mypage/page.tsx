@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { mockCurrentUser, mockExhibitions, mockCreators } from '@/lib/mock/phase1'
+import { mockCurrentUser, mockExhibitions, mockCreators, mockSpaces, getViewingHistoryByUserId } from '@/lib/mock/phase1'
 import { allSubjects, getManagedSubjects, mockCurrentUserRoles } from '@/lib/mock/subjects'
 import MembershipBadge from '@/components/MembershipBadge'
 import ExhibitionCard from '@/components/ExhibitionCard'
@@ -31,14 +31,21 @@ const myBenefitWithDetails = myBenefitUsages.map((usage) => ({
   benefit: mockBenefits.find((b) => b.id === usage.benefitId),
 })).filter((item) => item.benefit)
 
-// 来場履歴（モック）
-const visitHistory = [
-  { id: 'v1', spaceName: 'Gallery HAKU', exhibitionTitle: '余白の記録', date: '2025-03-15' },
-  { id: 'v2', spaceName: 'VOID Tokyo', exhibitionTitle: '土と光のあいだ', date: '2025-04-12' },
-  { id: 'v3', spaceName: 'Gallery HAKU', exhibitionTitle: 'グループ展「距離」', date: '2025-01-20' },
-  { id: 'v4', spaceName: 'Nanzuka Underground', exhibitionTitle: 'After the Garden', date: '2025-05-12' },
-  { id: 'v5', spaceName: 'VOID Tokyo', exhibitionTitle: 'Sound Architecture', date: '2024-12-03' },
-]
+const viewingHistory = getViewingHistoryByUserId(mockCurrentUser.id).map((item) => {
+  const exhibition = mockExhibitions.find((ex) => ex.id === item.exhibitionId)
+  const space = exhibition ? mockSpaces.find((sp) => sp.id === exhibition.spaceId) : null
+  const creators = exhibition
+    ? mockCreators.filter((creator) => exhibition.creatorIds.includes(creator.id))
+    : []
+
+  return {
+    id: item.id,
+    viewedAt: item.viewedAt,
+    exhibition,
+    space,
+    creators,
+  }
+}).filter((item) => item.exhibition)
 
 export default function MyPage() {
   const isPaidMember = mockCurrentUser.planType === 'paid'
@@ -323,16 +330,16 @@ export default function MyPage() {
           )}
         </section>
 
-        {/* 来場履歴 */}
+        {/* 関わりヒストリー */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">来場履歴</h2>
-            <span className="text-sm text-gray-400">{visitHistory.length}件</span>
+            <h2 className="text-lg font-semibold text-gray-900">関わりヒストリー</h2>
+            <span className="text-sm text-gray-400">{viewingHistory.length}件</span>
           </div>
           <div className="space-y-2">
-            {visitHistory.map((visit) => (
+            {viewingHistory.map((item) => (
               <div
-                key={visit.id}
+                key={item.id}
                 className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100"
               >
                 <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
@@ -340,12 +347,19 @@ export default function MyPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-medium text-gray-800 line-clamp-1">
-                    {visit.exhibitionTitle}
+                    {item.exhibition?.title}
                   </div>
-                  <div className="text-xs text-gray-400">{visit.spaceName}</div>
+                  <div className="text-xs text-gray-400 mt-0.5">
+                    {item.space?.name ?? 'スペース情報なし'}
+                  </div>
+                  {item.creators.length > 0 && (
+                    <div className="text-xs text-gray-500 mt-1 line-clamp-1">
+                      作家：{item.creators.map((creator) => creator.name).join(' / ')}
+                    </div>
+                  )}
                 </div>
                 <div className="text-xs text-gray-400 flex-shrink-0">
-                  {new Date(visit.date).toLocaleDateString('ja-JP', {
+                  {new Date(item.viewedAt).toLocaleDateString('ja-JP', {
                     month: 'short',
                     day: 'numeric',
                   })}

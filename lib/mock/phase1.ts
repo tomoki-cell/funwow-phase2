@@ -61,6 +61,13 @@ export interface Impression {
   createdAt: string
 }
 
+export interface ViewingHistoryItem {
+  id: string
+  userId: string
+  exhibitionId: string
+  viewedAt: string
+}
+
 // ============================================================
 // Exhibitions
 // ============================================================
@@ -329,6 +336,13 @@ export const mockCurrentUser = {
   savedCreatorIds: ['cr_001'],
 }
 
+export const mockViewingHistory: ViewingHistoryItem[] = [
+  { id: 'vh_001', userId: 'user_current', exhibitionId: 'ex_001', viewedAt: '2026-04-19T14:20:00Z' },
+  { id: 'vh_002', userId: 'user_current', exhibitionId: 'ex_003', viewedAt: '2026-04-12T11:30:00Z' },
+  { id: 'vh_003', userId: 'user_current', exhibitionId: 'ex_004', viewedAt: '2026-03-22T16:10:00Z' },
+  { id: 'vh_004', userId: 'user_current', exhibitionId: 'ex_002', viewedAt: '2026-03-15T13:05:00Z' },
+]
+
 // ============================================================
 // Helpers
 // ============================================================
@@ -359,4 +373,10 @@ export function getExhibitionsByCreatorId(creatorId: string): Exhibition[] {
 
 export function getImpressionsForExhibition(exhibitionId: string): Impression[] {
   return mockImpressions.filter((i) => i.exhibitionId === exhibitionId)
+}
+
+export function getViewingHistoryByUserId(userId: string): ViewingHistoryItem[] {
+  return mockViewingHistory
+    .filter((h) => h.userId === userId)
+    .sort((a, b) => new Date(b.viewedAt).getTime() - new Date(a.viewedAt).getTime())
 }

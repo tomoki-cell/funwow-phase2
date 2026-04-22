@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getSubjectBySlug } from '@/lib/mock/subjects'
+import { getSubjectBySlug, mockMonthlyMembershipRevenueBySubjectSlug } from '@/lib/mock/subjects'
 import SubjectBadge from '@/components/SubjectBadge'
 import { Users, FileText, Calendar, TrendingUp, ArrowRight } from 'lucide-react'
 
@@ -12,6 +12,7 @@ export default async function ManageDashboard({ params }: Props) {
   const { subjectSlug } = await params
   const subject = getSubjectBySlug(subjectSlug)
   if (!subject) notFound()
+  const monthlyMembershipRevenue = mockMonthlyMembershipRevenueBySubjectSlug[subjectSlug] ?? 0
 
   const stats = [
     { label: 'メンバー数', value: subject.memberCount.toLocaleString(), icon: Users, href: 'members' },
@@ -26,6 +27,15 @@ export default async function ManageDashboard({ params }: Props) {
         <SubjectBadge type={subject.type} />
         <h1 className="text-2xl font-bold text-gray-900">{subject.name}</h1>
       </div>
+
+      {subject.type === 'art_space' && (
+        <div className="bg-white rounded-xl border border-gray-100 p-5 mb-6">
+          <div className="text-sm text-gray-500 mb-1">今月の会員収益</div>
+          <div className="text-3xl font-bold text-gray-900">
+            ¥{monthlyMembershipRevenue.toLocaleString()}
+          </div>
+        </div>
+      )}
 
       {/* Stats カード */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">

@@ -363,6 +363,17 @@ export const mockFairEvents: Event[] = [
 // ============================================================
 
 export const mockCurrentUserMemberships: Record<string, CommunityMembership> = {
+  // 作家コミュニティのフォロワー
+  'sub_artist_001': {
+    id: 'mem_artist_001',
+    subjectId: 'sub_artist_001',
+    userId: 'user_current',
+    membershipPlanId: 'plan_artist_free',
+    planCode: 'free',
+    status: 'active',
+    joinedAt: '2026-03-12T00:00:00Z',
+    sourceType: 'self_join',
+  },
   // アートスペースの年会員
   'sub_space_001': {
     id: 'mem_001',
@@ -390,7 +401,7 @@ export const allSubjects: SubjectWithStats[] = [
     eventCount: 6,
     latestPosts: mockArtistPosts,
     upcomingEvents: mockArtistEvents,
-    currentUserMembership: undefined,
+    currentUserMembership: mockCurrentUserMemberships['sub_artist_001'],
   },
   {
     ...mockSpaceSubject,
@@ -419,7 +430,12 @@ export const allSubjects: SubjectWithStats[] = [
 // ============================================================
 export const mockCurrentUserRoles: { subjectSlug: string; roleType: 'owner' | 'admin' | 'staff' }[] = [
   { subjectSlug: 'gallery-haku', roleType: 'owner' },
+  { subjectSlug: 'aoi-yamada', roleType: 'owner' },
 ]
+
+export const mockMonthlyMembershipRevenueBySubjectSlug: Record<string, number> = {
+  'gallery-haku': 324000,
+}
 
 export function getSubjectBySlug(slug: string): SubjectWithStats | undefined {
   return allSubjects.find((s) => s.slug === slug)

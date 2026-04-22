@@ -5,19 +5,25 @@ import { MessageCircle, Loader2, CheckCircle } from 'lucide-react'
 
 interface Props {
   exhibitionId: string
+  onSubmitted?: (body: string) => Promise<void> | void
 }
 
-export default function ImpressionForm({ exhibitionId }: Props) {
+export default function ImpressionForm({ exhibitionId, onSubmitted }: Props) {
   const [body, setBody] = useState('')
   const [state, setState] = useState<'idle' | 'loading' | 'done'>('idle')
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!body.trim() || state !== 'idle') return
+    const text = body.trim()
     setState('loading')
 
-    // TODO: Supabase Impression 作成
-    await new Promise((r) => setTimeout(r, 700))
+    if (onSubmitted) {
+      await onSubmitted(text)
+    } else {
+      // TODO: Supabase Impression 作成
+      await new Promise((r) => setTimeout(r, 700))
+    }
 
     setState('done')
     setBody('')
