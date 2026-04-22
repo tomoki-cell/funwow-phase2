@@ -1,13 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 export default function GatePage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -15,9 +13,10 @@ export default function GatePage() {
     setError(false)
 
     if (password === 'funwowphase2') {
-      document.cookie = `funwow_gate=funwowphase2; path=/; max-age=${60 * 60 * 24 * 30}`
-      router.push('/')
-      router.refresh()
+      document.cookie = `funwow_gate=funwowphase2; path=/; max-age=${60 * 60 * 24 * 30}; samesite=lax`
+      // クッキー反映直後のクライアント遷移は稀に取りこぼすため、フル遷移で確実に進める
+      window.location.replace('/')
+      return
     } else {
       setError(true)
       setLoading(false)
